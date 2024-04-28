@@ -4,8 +4,6 @@ const userServices = require("../services/user.services");
 const Role = require("../helpers/role");
 const jwt = require("../helpers/jwt");
 //routes
-router.post("/authenticate", authenticate);
-router.post("/register", register);
 router.get("/Admin", jwt(Role.Admin), getAll);
 router.get("/current", jwt(), getCurrent);
 router.get("/:id", getById);
@@ -14,32 +12,7 @@ router.delete("/:id", _delete);
 
 module.exports = router;
 
-//route functions
-function authenticate(req, res, next) {
-  userServices
-    .authenticate(req.body)
-    .then((user) => {
-      console.log(user);
-      user
-        ? res.json({ user: user, message: "User logged in successfully" })
-        : res
-          .status(400)
-          .json({ message: "Username or password is incorrect." });
-    })
-    .catch((error) => next(error));
-}
 
-function register(req, res, next) {
-  userServices
-    .create(req.body)
-    .then((user) =>
-      res.json({
-        user: user,
-        message: `User Registered successfully with email ${req.body.email}`,
-      })
-    )
-    .catch((error) => next(error));
-}
 
 function getAll(req, res, next) {
   const currentUser = req.user;
