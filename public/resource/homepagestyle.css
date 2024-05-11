@@ -1,0 +1,143 @@
+a {
+  color: #24B2AA;
+  text-decoration: none;
+  border-bottom: 1px solid #24B2AA;
+}
+.card-background{
+  background-color: #F8F8F8;
+}
+.border-black{
+  border-color: black;
+}
+.logo-background{
+  background-color: #24B2AA;
+}
+.header-background{
+  background-color: #24B2AA;
+}
+.center-this {
+  /* background-color: #f8f9fa; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+}
+.form-control {
+  
+  width: 600px;
+}
+.search-bg {
+  background-color: #49d3cc;
+}
+.nav-link.active.dropdown-toggle::after {
+  display: none;
+}
+.cart-count {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: -5;
+  background-color: rgb(236, 197, 69);
+  color: rgb(12, 1, 1);
+  border-radius: 50%;
+    padding: 5px;
+    font-size: 12px;
+    width: 20px;
+    height: 30px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.dropdown:hover .cart-items {
+  display: block;
+}
+.btn-bg {
+  background-color: #0a635e;
+  color: white;
+}
+.btnCateAll {
+  
+  margin: 0 20px; 
+  width: 60px;
+}
+.btnCate {
+  margin: 0 10px; 
+  width: 120px;
+}
+.container.d-flex {
+  margin-top: -20px; 
+}
+.dropdown-toggle::after {
+  display: none;
+}
+.carousel-item img {
+  height: 400px; 
+  object-fit: cover; 
+}
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.6); 
+  bottom: 0; 
+  top: auto; 
+  transform: translate(-50%, -50%); 
+  left: 50%; 
+}
+.highlight-card {
+  width: 263px
+
+}
+.card-img-top {
+  width: 100%; 
+  height: 200px; 
+  object-fit: cover; 
+}
+.custom-button{
+  border-radius: 50px;
+  background-color: #24B2AA;
+  border-color: black;
+  color: white;
+  width: 70%;
+}
+.footer {
+  position: static;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #24B2AA; 
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+.btn:hover {
+  background-color: #60e4dd; 
+  color: #24B2AA;
+}
+.product-card {
+  border: none;
+}
+
+.product-image {
+  width: 100%;
+}
+/* Styles for screens smaller than 768px (typical breakpoint for tablets and smaller) */
+@media screen and (max-width: 768px) {
+  .form-control {
+      width: 100%;
+  }
+
+  .btnCateAll {
+      width: 50%; 
+  }
+
+  .btnCate {
+      width: 100%; 
+  }
+
+  .highlight-card {
+      width: 100%;
+  }
+   /* Add responsive styles for the cart and user icons here */
+   .cart-icon, .user-icon {
+    width: 50px; 
+    height: 50px; 
+}
+}
