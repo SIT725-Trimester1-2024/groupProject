@@ -31,7 +31,7 @@ function authenticate(req, res, next) {
 
 
 function register(req, res, next) {
-  userServicesr
+  userServices
     .create(req.body)
     .then((user) =>
       res.json({
