@@ -1,21 +1,32 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');
+const Product = require('./product');
+const Order = require('./orders');
 
-const schema = new Schema({
-  email: { type: String, unique: true, required: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  password: { type: String, required: true },
-  role: { type: String, required: true },
-  createdDate: { type: Date, default: Date.now },
+const userSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String
+    },
+    Address: {
+        type: String
+    },
+    googleId: {
+        type: String
+    },
+    cart: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Products'
+        }
+    ]
 });
 
-schema.set("toJSON", {
-  virtuals: true,
-  versionKey: false,
-  transform: function (doc, ret) {
-    delete ret._id, delete ret.password;
-  },
-});
+userSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("User", schema);
+const User = mongoose.model('users', userSchema);
+
+module.exports = User;
