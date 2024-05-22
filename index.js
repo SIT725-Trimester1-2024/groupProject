@@ -9,11 +9,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('./models/user');
-const productRoutes = require('./routes/products');
 const authRoutes = require('./routes/auth');
-const cartRoutes = require('./routes/cart');
-const dashRoutes = require('./routes/dashboard');
-const paymentRoutes = require('./routes/payment');
 
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
@@ -28,11 +24,7 @@ mongoose.connect(process.env.MONGODB_URI, {
     useFindAndModify: false
 });
 
-// seed DB
-// const seed = require('./seedDB');
-// seed();
 
-// session and flash messages config
 const sessionConfig = {
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -41,13 +33,11 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
-// Inint the passport and sessions for storing the users
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Configuring the passport to use local strategy
-
 passport.use(new LocalStrategy(User.authenticate()));
+
 
 passport.use(
     new GoogleStrategy(
@@ -98,6 +88,7 @@ passport.deserializeUser((id, done) => {
     });
 });
 
+
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
@@ -105,13 +96,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Routes
-
-app.use(productRoutes);
 app.use(authRoutes);
-app.use(cartRoutes);
-app.use(dashRoutes);
-app.use(paymentRoutes);
 
 app.get('/', (req, res) => {
     res.redirect('/products');
