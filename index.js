@@ -96,6 +96,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(authRoutes);
 
 app.get('/', (req, res) => {
     res.redirect('/products');
