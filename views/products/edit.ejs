@@ -1,0 +1,81 @@
+<%- include("../partials/header") %> <%- include("../partials/navbar-2") %>
+<!-- <link rel="stylesheet" href="/css/app.css"> -->
+
+<div class="container">
+    <h1 class="edit">Edit Product</h1>
+
+    <form
+        action="/product/<%= product.id %>?_method=patch" 
+        method="post"
+        class="row g-3 needs-validation"
+        enctype="multipart/form-data"
+        novalidate
+    >
+        <div class="mb-3 col-6">
+            <label for="title" class="form-label">Title</label>
+            <input
+                type="text"
+                name="product[title]"
+                placeholder="Title"
+                class="form-control"
+                id="title"
+                value="<%= product.title %>"
+                required
+            />
+        </div>
+        <div class="col-6"></div>
+        <div class="mb-3 col-6">
+            <label for="title" class="form-label">Price</label>
+            <input
+                type="number"
+                name="product[price]"
+                placeholder="Price"
+                class="form-control"
+                id="number"
+                value="<%= product.price %>"
+                required
+            />
+        </div>
+        <br /><br />
+        <div class="mb-3 col-12">
+            <label for="image" class="form-label">Image</label>
+            <input
+                type="file"
+                name="product[images]"
+                placeholder="Image"
+                class="form-control"
+                id="image"
+                multiple
+            />
+        </div>
+        <br /><br />
+        <div class="mb-3 col-12">
+            <p class="form-p">Preview</p>
+            <div class="images">
+                <% for(let i of product.images){ %>
+                    <img src="<%= i %>" alt="" height="150px" width="150px">
+                    <% } %> 
+                </div>
+        </div>
+
+        <div class="mb-3 col-12">
+            <label for="desc" class="form-label">Description</label>
+            <textarea
+                name="product[description]"
+                placeholder="Description"
+                class="form-control"
+                id="desc"
+                rows="12"
+                required
+            ><%= product.description %></textarea>
+        </div>
+        
+
+        <div class="mb-3 col-6 center-this">
+            <button class="btn btn-main mb-5 ml-3 custom-button" type="submit">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+<%- include("../partials/footer") %>

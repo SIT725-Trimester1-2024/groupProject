@@ -27,14 +27,14 @@ a {
     width: 70%;
 }
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #24B2AA; 
-    color: white;
-    padding: 10px 0;
+    color: #fff;
     text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+
+    background-color: #24B2AA; 
 }
 .btn:hover, a{
     background-color: white; 

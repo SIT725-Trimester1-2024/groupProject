@@ -1,0 +1,161 @@
+
+    <%- include("../partials/header") %>
+    <%- include("../partials/navbar-2") %>
+    <link rel="stylesheet" href="/css/single.css" />
+
+    <div class="container mt-5">
+        <%- include('../partials/flash') %>
+        <div class="mcontainer row">
+            <div class="carousel-container col-md-6">
+                <div class="show">
+                    <img src="<%= product.images[0] %>" id="show-img" class="img-fluid rounded" />
+                </div>
+                <div class="small-img d-flex justify-content-center mt-3">
+                    <img src="/assets/online_icon_left@2x.png" class="icon-left mr-2" alt="" id="prev-img" />
+                    <div class="small-container d-flex flex-nowrap overflow-auto">
+                        <div id="small-img-roll" class="d-flex">
+                            <% for(let url of product.images) { %>
+                                <img src="<%= url %>" alt="" class="show-small-img img-thumbnail mr-2" />
+                            <% } %>
+                        </div>
+                    </div>
+                    <img src="/assets/online_icon_right@2x.png" class="icon-right ml-2" alt="" id="next-img" />
+                </div>
+
+                <% if (currentUser && currentUser.username === 'tienht.vn@gmail.com') { %>
+                    <div class="admin mt-3">
+                        <a href="/product/<%= product.id %>/edit?_method=PATCH" class="btn btn-warning mr-2">Edit</a>
+                        <form action="/product/<%= product.id %>?_method=DELETE" method="POST" class="d-inline">
+                            <input type="submit" class="btn btn-danger" value="Delete" />
+                        </form>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="product-wrap col-md-6">
+                <div class="product-details">
+                    <h4 class="product-title"><%= product.title %></h4>
+                    <p class="price text-danger">$ <%= product.price %></p>
+                    <p class="description text-muted"><%= product.description %></p>
+                    <label for="quantity">Quantity: </label>
+                    <div class="qty d-flex align-items-center">
+                        <input type="number" name="quantity" value="1" min="1" max="10" class="form-control w-25 mr-3" />
+                        <form action="/user/<%= product._id %>/cart" method="post">
+                            <button type="submit" class="btn btn-primary">Add To Cart</button>
+                        </form>
+                        <i class="fa fa-heart ml-3 text-danger" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <div class="reviews-wrap mt-5">
+                    <div class="reviews-form">
+                        <div class="reviews-form">
+                            <h4 class="mt-5">Leave a Review</h4>
+                            <form
+                                class="mb-5 row g-3 needs-validation"
+                                action="/product/<%= product.id %>/review"
+                                method="post"
+                                novalidate
+                            >
+                                <div class="mb-3 col-6">
+                                    <fieldset class="starability-basic">
+                                        <input
+                                            type="radio"
+                                            id="no-rate"
+                                            class="input-no-rate"
+                                            name="rating"
+                                            value="1"
+                                            checked
+                                            aria-label="No rating."
+                                        />
+                                        <input
+                                            type="radio"
+                                            id="first-rate1"
+                                            name="rating"
+                                            value="1"
+                                        />
+                                        <label for="first-rate1" title="Terrible"
+                                            >1 star</label
+                                        >
+                                        <input
+                                            type="radio"
+                                            id="first-rate2"
+                                            name="rating"
+                                            value="2"
+                                        />
+                                        <label for="first-rate2" title="Not good"
+                                            >2 stars</label
+                                        >
+                                        <input
+                                            type="radio"
+                                            id="first-rate3"
+                                            name="rating"
+                                            value="3"
+                                        />
+                                        <label for="first-rate3" title="Average"
+                                            >3 stars</label
+                                        >
+                                        <input
+                                            type="radio"
+                                            id="first-rate4"
+                                            name="rating"
+                                            value="4"
+                                        />
+                                        <label for="first-rate4" title="Very good"
+                                            >4 stars</label
+                                        >
+                                        <input
+                                            type="radio"
+                                            id="first-rate5"
+                                            name="rating"
+                                            value="5"
+                                        />
+                                        <label for="first-rate5" title="Amazing"
+                                            >5 stars</label
+                                        >
+                                    </fieldset>
+                                </div>
+                                <div class="mb-3 col-12">
+                                    <label for="review" class="form-label">Comment </label>
+                                    <input
+                                        type="text"
+                                        name="review"
+                                        placeholder="Review"
+                                        class="form-control"
+                                        id="review"
+                                    />
+                                </div>
+                                <br />
+                                <input
+                                    type="submit"
+                                    value="Submit"
+                                    class="mb-3 ml-3 btn btn-secondary col-3"
+                                />
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="reviews">
+                        <div class="card mb-5">
+                            <div class="card-header">Reviews</div>
+                            <% if (product.reviews.length !== 0) { %>
+                                <% for (let c of product.reviews) { %>
+                                    <blockquote class="blockquote ml-3 mb-3">
+                                        <div class="row mr-2">
+                                            <p class="col-6"><%= c.review %></p>
+                                            <p class="starability-result text-right rating col-6" data-rating="<%= c.rating %>">Rated: <%= c.rating %> stars</p>
+                                        </div>
+                                        <div class="blockquote-footer">
+                                            <cite title="Source Title"><%= c.user %></cite>
+                                        </div>
+                                    </blockquote>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>

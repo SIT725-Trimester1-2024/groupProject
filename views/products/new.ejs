@@ -1,0 +1,73 @@
+<%- include("../partials/header") %>
+ <%- include("../partials/navbar-2") %>
+<link rel="stylesheet" href="/css/new.css" />
+
+<div class="container"><%- include('../partials/flash') %></div>
+
+<div class="container">
+    <h1 class="edit">New Product</h1>
+
+    <form
+        method="post"
+        action="/products/new"
+        class="row g-3 needs-validation"
+        enctype="multipart/form-data"
+        novalidate
+    >
+        <div class="mb-3 col-6">
+            <label for="title" class="form-label">Title</label>
+            <input
+                type="text"
+                name="product[title]"
+                placeholder="Title"
+                class="form-control"
+                id="title"
+                required
+            />
+        </div>
+        <div class="mb-3 col-6"></div>
+        <div class="mb-3 col-6">
+            <label for="title" class="form-label">Price</label>
+            <input
+                type="number"
+                name="product[price]"
+                placeholder=""
+                class="form-control"
+                id="number"
+                required
+            />
+        </div>
+        <br /><br />
+        <div class="mb-3 col-12">
+            <label for="image" class="form-label">Images</label>
+            <input
+                type="file"
+                name="product[images]"
+                placeholder="Image"
+                class="form-control"
+                id="image"
+                multiple
+            />
+        </div>
+        <br /><br />
+
+        <div class="mb-3 col-12">
+            <label for="desc" class="form-label">Description</label>
+            <textarea
+                name="product[description]"
+                placeholder="Description"
+                class="form-control"
+                id="desc"
+                rows="12"
+                required
+            ></textarea>
+        </div>
+        <div class="mb-3 col-6 center-this">
+            <button class="btn btn-main mb-5 ml-3 custom-button" type="submit">
+                Submit
+            </button>
+        </div>
+       
+    </form>
+</div>
+<%- include("../partials/footer") %>

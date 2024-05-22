@@ -10,6 +10,7 @@ const LocalStrategy = require('passport-local');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('./models/user');
 const authRoutes = require('./routes/auth');
+const productsRoutes = require('./routes/products');
 
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
@@ -97,6 +98,7 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
+app.use(productsRoutes);
 
 app.get('/', (req, res) => {
     res.redirect('/products');
@@ -107,3 +109,6 @@ app.all('*', (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server running on port 3000.');
 });
+
+// seed DB
+
