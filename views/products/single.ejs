@@ -22,7 +22,7 @@
                     <img src="/assets/online_icon_right@2x.png" class="icon-right ml-2" alt="" id="next-img" />
                 </div>
 
-                <% if (currentUser && currentUser.username === 'admin@gmail.com') { %>
+                <% if (currentUser && currentUser.username === 'tienht.vn@gmail.com') { %>
                     <div class="admin mt-3">
                         <a href="/product/<%= product.id %>/edit?_method=PATCH" class="btn btn-warning mr-2">Edit</a>
                         <form action="/product/<%= product.id %>?_method=DELETE" method="POST" class="d-inline">

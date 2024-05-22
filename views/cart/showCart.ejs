@@ -1,0 +1,93 @@
+<%- include("../partials/header") %> 
+<%- include("../partials/navbar-2") %>
+<link rel="stylesheet" href="/css/cart.css" />
+
+<div class="container">
+    <div class="head">
+        <h4>Shopping Cart</h4>
+        <div class="icons-cart">
+            <i class="fa fa-shopping-cart"></i>
+            <hr />
+            <i class="fa fa-truck"></i>
+        </div>
+    </div>
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% total = 0;iter = 1 %> <% if(cart && cart.length > 0){ %> <%
+            for(let item of cart){ %>
+            <tr>
+                <th><div><%= iter++ %></div></th>
+                <td>
+                    <div class="cart-card">
+                        <img
+                            class="img-circle"
+                            src="<%= item.images[0] %>"
+                            height="100px"
+                            width="100px"
+                        />
+                        <h5><%= item.title %></h5>
+                    </div>
+                </td>
+                <td>1<%= item.quantity %></td>
+                <td class="price">&#8377; <%= item.price %></td>
+                <td>
+                    <form
+                        action="/user/<%= currentUser._id %>/cart/<%= item._id %>?_method=DELETE"
+                        method="POST"
+                    >
+                        <button type="submit" class="btn">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <% total += item.price; } } %>
+        </tbody>
+    </table>
+    <div class="checkout">
+        <div>
+            <a class="btn" href="/products">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                Continue Shopping
+            </a>
+        </div>
+        <div>
+            <p>Total Cost: &#8377;<%= total %></p>
+            <form action="/payment_gateway/payumoney" method="post">
+                <input
+                    class="con"
+                    type="hidden"
+                    name="phone"
+                    value="9999999999"
+                />
+                <input
+                    type="hidden"
+                    name="service_provider"
+                    value="payu_paisa"
+                />
+                <input
+                    type="hidden"
+                    class="product"
+                    name="productinfo"
+                    value="Educational"
+                />
+                <button
+                    type="submit"
+                    class="btn btn-main <% if(!total){ %> disabled <% } %>"
+                >
+                    Place Order
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include("../partials/footer") %>
