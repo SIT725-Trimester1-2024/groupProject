@@ -29,3 +29,25 @@ document.getElementById("applyButton").addEventListener("click", function (e) {
       }
     });
 });
+app.delete("/user/:userId/cart", function (req, res) {
+  // Get the user ID from the request parameters
+  var userId = req.params.userId;
+
+  // Find the user and empty their cart
+  User.findById(userId, function (err, user) {
+    if (err) {
+      console.error(err);
+      res.status(500).send(err);
+    } else {
+      user.cart = [];
+      user.save(function (err) {
+        if (err) {
+          console.error(err);
+          res.status(500).send(err);
+        } else {
+          res.redirect("/user/" + userId + "/cart");
+        }
+      });
+    }
+  });
+});

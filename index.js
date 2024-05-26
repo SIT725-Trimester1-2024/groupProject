@@ -103,27 +103,6 @@ app.all("*", (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server running on port 3000.");
 });
-app.delete("/user/:userId/cart", function (req, res) {
-  // Get the user ID from the request parameters
-  var userId = req.params.userId;
 
-  // Find the user and empty their cart
-  User.findById(userId, function (err, user) {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err);
-    } else {
-      user.cart = [];
-      user.save(function (err) {
-        if (err) {
-          console.error(err);
-          res.status(500).send(err);
-        } else {
-          res.redirect("/user/" + userId + "/cart");
-        }
-      });
-    }
-  });
-});
 
 // seed DB
