@@ -1,93 +1,138 @@
-<%- include("../partials/header") %> 
-<%- include("../partials/navbar-2") %>
+<%- include("../partials/header") %> <%- include("../partials/navbar-2") %>
 <link rel="stylesheet" href="/css/cart.css" />
 
 <div class="container">
-    <div class="head">
-        <h4>Shopping Cart</h4>
-        <div class="icons-cart">
-            <i class="fa fa-shopping-cart"></i>
-            <hr />
-            <i class="fa fa-truck"></i>
-        </div>
+  <div class="headcart">
+    <a href="/user/<%= currentUser._id%>/cart">
+      <h1>Shopping Cart</h1>
+    </a>
+    <div class="icons-cart">
+      <i class="fa fa-shopping-cart"></i>
+      <hr />
+      <i class="fa fa-truck"></i>
     </div>
-    <table class="table table-borderless">
-        <thead>
+  </div>
+  <hr />
+  <div class="container row">
+    <div class="col-9 ">
+        <div class="row Check-summary">
+            <div class="col-6 select-style">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="selectAll">
+                  <label class="form-check-label" for="selectAll">
+                    Select all
+                  </label>
+                </div>
+              </div>
+            <div class="col-6 remove-style">
+                <p>Remove </p>
+            </div>
+        </div>
+        <table class="table table-borderless">
+          <thead>
             <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th></th>
+              <th>#</th>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th></th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <% total = 0;iter = 1 %> <% if(cart && cart.length > 0){ %> <%
             for(let item of cart){ %>
             <tr>
-                <th><div><%= iter++ %></div></th>
-                <td>
-                    <div class="cart-card">
-                        <img
-                            class="img-circle"
-                            src="<%= item.images[0] %>"
-                            height="100px"
-                            width="100px"
-                        />
-                        <h5><%= item.title %></h5>
-                    </div>
-                </td>
-                <td>1<%= item.quantity %></td>
-                <td class="price">&#8377; <%= item.price %></td>
-                <td>
-                    <form
-                        action="/user/<%= currentUser._id %>/cart/<%= item._id %>?_method=DELETE"
-                        method="POST"
-                    >
-                        <button type="submit" class="btn">
-                            <i class="fa fa-close"></i>
-                        </button>
-                    </form>
-                </td>
+              <th><div><%= iter++ %></div></th>
+              <td>
+                <div class="cart-card">
+                  <img
+                    class="img-circle"
+                    src="<%= item.images[0] %>"
+                    height="100px"
+                    width="100px"
+                  />
+                  <h5><%= item.title %></h5>
+                </div>
+              </td>
+              <td>1<%= item.quantity %></td>
+              <td class="price">$<%= item.price %></td>
+              <td>
+                <form
+                  action="/user/<%= currentUser._id %>/cart/<%= item._id %>?_method=DELETE"
+                  method="POST"
+                >
+                  <button type="submit" class="btn">
+                    <i class="fa fa-close"></i>
+                  </button>
+                </form>
+              </td>
             </tr>
             <% total += item.price; } } %>
-        </tbody>
-    </table>
-    <div class="checkout">
-        <div>
-            <a class="btn" href="/products">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                Continue Shopping
-            </a>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-3 summary-container">
+        <div class="cart-summary">
+          <h3>Order Summary</h3>
+          <hr />
+
+          <div class="row">
+            <div class="col-6">
+              <p>Subtotal (<%= cart.length %> Items)</p>
+            </div>
+            <div class="col-5 summary-value">
+              <p>$<%= total %></p>
+            </div>
+          </div>
+
+          <input type="text" placeholder="Enter voucher code" />
+          <button class="apply-button">Apply</button>
+          <br />
+          <br />
+
+          <div class="row">
+            <div class="col-6">
+              <p>Shipping</p>
+            </div>
+            <div class="col-5 summary-value">
+              <p>Free</p>
+            </div>
+          </div>
+
+          <hr />
+          <div class="row">
+            <div class="col-6 summary-checkout">
+              <p>Total:</p>
+            </div>
+            <div class="col-5 summary-value-checkout">
+              <p>$<%= total %></p>
+            </div>
+          </div>
         </div>
         <div>
-            <p>Total Cost: &#8377;<%= total %></p>
-            <form action="/payment_gateway/payumoney" method="post">
-                <input
-                    class="con"
-                    type="hidden"
-                    name="phone"
-                    value="9999999999"
-                />
-                <input
-                    type="hidden"
-                    name="service_provider"
-                    value="payu_paisa"
-                />
-                <input
-                    type="hidden"
-                    class="product"
-                    name="productinfo"
-                    value="Educational"
-                />
-                <button
-                    type="submit"
-                    class="btn btn-main <% if(!total){ %> disabled <% } %>"
-                >
-                    Place Order
-                </button>
-            </form>
+          <form
+            action="<%= total && total > 0 ? '/payment_gateway/payumoney' : '#' %>"
+            method="post"
+          >
+            <button
+              type="submit"
+              class="btn1 btn-main <% if(!total || total <= 0){ %> disabled <% } %>"
+            >
+              Place Order
+            </button>
+          </form>
         </div>
+      </div>
+      <div class="checkout">
+        <div>
+          <a class="btn1" href="/products">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            Continue Shopping
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
+  <%- include("../partials/footer") %>
 </div>
-<%- include("../partials/footer") %>
