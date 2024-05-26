@@ -87,6 +87,15 @@ form > button > i {
   padding: 10px;
   border-radius: 10px;
 }
+.table-container {
+  background-color: #24b2aa;
+  padding: 2px;
+  border-radius: 10px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
 input[type="text"] {
   border: 1px solid black;
   padding: 8px 16px;
@@ -159,12 +168,40 @@ input[type="text"] {
 }
 
 .btn-main {
-  background-color: #e6cd55; /* Blue */
+  background-color: #e6cd55;
   color: black;
 }
 
 .btn-main.disabled {
-  background-color: #cccccc; /* Gray */
+  background-color: #cccccc;
   color: #666666;
   cursor: not-allowed;
+}
+.btn2 {
+  background-color: #24b2aa;
+  border: none;
+  font-size: 1em;
+}
+.btn2:hover {
+  color: rgb(206, 206, 206);
+}
+.deleteall:hover {
+  color: rgb(206, 206, 206);
+}
+.table {
+  color: white;
+}
+.price {
+  text-align: right;
+}
+.quantity {
+  text-align: center;
+}
+.checkbox {
+  text-align: left;
+}
+.Check-summary,
+.table-container {
+  margin-left: 0;
+  padding-left: 15px;
 }
