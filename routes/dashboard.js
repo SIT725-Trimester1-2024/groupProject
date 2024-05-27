@@ -54,7 +54,7 @@ router.get('/ordersadmin', isLoggedIn, isAdmin, async (req, res) => {
     }
 });
 //admin change order status 
-router.patch('/adminfinishorder/:id', isLoggedIn, isAdmin, async (req, res) => {
+router.get('/adminfinishorder/:id', isLoggedIn, isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         //find by order id and update status to delivered
