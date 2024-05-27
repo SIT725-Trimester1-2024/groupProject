@@ -1,31 +1,16 @@
 <div class="header header-background">
   <div class="container d-flex justify-content-between align-items-center">
     <div class="col-3 header-logo logo-background">
-      <img
-        src="/image/image.png"
-        alt="Deakin Market Place"
-        width="200px"
-        height="200px"
-      />
+      <img src="/image/image.png" alt="Deakin Market Place" width="200px" height="200px" />
     </div>
     <div class="col-6 header-nav">
       <form class="d-flex" role="search">
         <div class="p-1 search-bg rounded mr-4">
-          <input
-            class="form-control"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
+          <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
         </div>
         <div class="search-bg rounded">
           <button class="btn" type="submit">
-            <img
-              src="/image/icon _Search.svg"
-              alt="Search icon"
-              width="30px"
-              height="30px"
-            />
+            <img src="/image/icon _Search.svg" alt="Search icon" width="30px" height="30px" />
           </button>
         </div>
       </form>
@@ -33,37 +18,25 @@
     <!-- Cart and Account -->
     <div class="col-3">
       <nav class="navbar navbar-expand-lg">
-        <div
-          class="container-fluid d-flex align-items-center justify-content-end"
-        >
+        <div class="container-fluid d-flex align-items-center justify-content-end">
           <!-- Cart  -->
           <div class="nav-link dropdown icon_navbar">
-            <a href="/user/<%= currentUser._id%>/cart">
-              <img
-                src="/image/icon _Cart.svg"
-                alt="Cart"
-                width="30px"
-                height="30px"
-                class="icon_navbar"
-              />
-            </a>
+            <!-- If currentUser._id is null the link is login -->
+            <% if(!currentUser) { %>
+              <a class="nav-link active dropdown-toggle" href="/login" aria-expanded="false"
+                style="background-color: #60e4dd"><img src="/image/icon _Cart.svg" alt="Cart" width="30px" height="30px"
+                  class="icon_navbar" /></a>
+              <% } else { %>
+                <a href="/user/<%= currentUser._id%>/cart">
+                  <img src="/image/icon _Cart.svg" alt="Cart" width="30px" height="30px" class="icon_navbar" />
+                </a>
+                <% } %>
           </div>
           <!-- Account -->
           <div class="nav-link dropdown">
-            <a
-              class="nav-link active dropdown-toggle"
-              href="#"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              data-bs-boundary="viewport"
-              style="background-color: #60e4dd"
-              ><img
-                src="/image/icon _Person.svg"
-                alt="User"
-                width="30px"
-                height="30px"
-                class="icon_navbar"
-            /></a>
+            <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
+              data-bs-boundary="viewport" style="background-color: #60e4dd"><img src="/image/icon _Person.svg"
+                alt="User" width="30px" height="30px" class="icon_navbar" /></a>
             <ul class="dropdown-menu">
               <li>
                 <a class="dropdown-item" href="/profile">My Account</a>
