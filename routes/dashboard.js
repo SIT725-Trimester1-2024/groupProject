@@ -3,6 +3,7 @@ const User = require('../models/user');
 const Order = require('../models/orders');
 const isLoggedIn = require('../middlewares/isLoggedIn');
 const isValid = require('../middlewares/isValid');
+const isAdmin = require('../middlewares/isAdmin');
 const router = express.Router();
 
 router.get('/user/:id', isLoggedIn, isValid, async (req, res) => {
@@ -42,7 +43,7 @@ router.get('/orders/:id', isLoggedIn, isValid, async (req, res) => {
     }
 });
 //get all orders of all user admin role
-router.get('/orders', isAdmin, isValid, async (req, res) => {
+router.get('/ordersadmin', isLoggedIn, isAdmin, async (req, res) => {
     try {
         const orders = await Order.find().populate('products');
         res.render('account/order-admin', { orders });
