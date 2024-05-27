@@ -23,7 +23,7 @@ router.post('/payment_gateway/stripe', isLoggedIn, async (req, res) => {
             automatic_payment_methods: {enabled: true, allow_redirects: 'never'},
             receipt_email: req.user.username
         });
-        res.send('Payment successful');
+        res.redirect('/');
     } catch (err) {
         console.error('Error processing payment:', err);
         let message = 'An error occurred while processing your payment.';
@@ -59,7 +59,7 @@ router.post('/payment/success', isLoggedIn, async (req, res) => {
             'success',
             'Your Order has been Successfully Placed.Thanks for Shopping with us!'
         );
-        res.redirect(`/orders/${req.user._id}`);
+        res.redirect(`/`);
     } catch (e) {
         console.log(e.message);
         req.flash(
