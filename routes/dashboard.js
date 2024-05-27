@@ -53,7 +53,18 @@ router.get('/ordersadmin', isLoggedIn, isAdmin, async (req, res) => {
         res.status(500).render('error');
     }
 });
+//admin change order status 
+router.patch('/ordersadmin/:id', isLoggedIn, isAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+        //find by order id and update status to delivered
+        await Order.findByIdAndUpdate(id, { delivered: 'true' });
+        req.flash('success', 'Successfully updated order status');
+    } catch (err) {
+        console.log(err);
+        req.flash('error', 'Unable to update order status');
 
-
+    }
+});
 
 module.exports = router;
