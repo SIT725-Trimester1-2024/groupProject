@@ -12,6 +12,7 @@ const User = require("./models/user");
 const authRoutes = require("./routes/auth");
 const productsRoutes = require("./routes/products");
 const accountRoutes = require("./routes/account");
+const cartRoutes = require("./routes/cart");
 
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
@@ -93,6 +94,7 @@ app.use((req, res, next) => {
 app.use(authRoutes);
 app.use(productsRoutes);
 app.use(accountRoutes);
+app.use(cartRoutes);
 
 app.get("/", (req, res) => {
   res.redirect("/products");

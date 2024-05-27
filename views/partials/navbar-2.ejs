@@ -38,13 +38,15 @@
         >
           <!-- Cart  -->
           <div class="nav-link dropdown icon_navbar">
-            <img
-              src="/image/icon _Cart.svg"
-              alt="Cart"
-              width="30px"
-              height="30px"
-              class="icon_navbar"
-            />
+            <a href="/user/<%= currentUser._id%>/cart">
+              <img
+                src="/image/icon _Cart.svg"
+                alt="Cart"
+                width="30px"
+                height="30px"
+                class="icon_navbar"
+              />
+            </a>
           </div>
           <!-- Account -->
           <div class="nav-link dropdown">
@@ -64,9 +66,7 @@
             /></a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" href="/user/<%= currentUser._id%>/"
-                  >My Account</a
-                >
+                <a class="dropdown-item" href="/profile">My Account</a>
               </li>
               <li>
                 <a class="dropdown-item" href="/log_out">Log out</a>
