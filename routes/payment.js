@@ -1,71 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const request = require('request');
-const jsSHA = require('jssha');
-const uniqid = require('uniqid');
 const isLoggedIn = require('../middlewares/isLoggedIn');
 const Order = require('../models/orders');
+const Stripe = require('stripe')('sk_test_51PItrz2LidDOORGRkisEiM5UECjAwKjYRytvVg34wh4SAX1M91xRYmPvanvgxZBE3mP9bfwPW66fK10yr3DyOC0T002L0xZIjI');
 
-router.post('/payment_gateway/payumoney', isLoggedIn, (req, res) => {
-    if (req.session.amount === 0) {
-        return;
-    }
-    req.body.txnid = uniqid.process();
-    req.body.email = req.user.username;
-    req.body.firstname = req.user.title;
-    req.body.amount = req.session.amount;
-
-    const pay = req.body;
-    const hashString =
-        process.env.MERCHANT_KEY +
-        '|' +
-        pay.txnid +
-        '|' +
-        pay.amount +
-        '|' +
-        pay.productinfo +
-        '|' +
-        pay.firstname +
-        '|' +
-        pay.email +
-        '|' +
-        '||||||||||' +
-        process.env.MERCHANT_SALT; //store in in different file
-
-    const sha = new jsSHA('SHA-512', 'TEXT');
-    sha.update(hashString);
-    const hash = sha.getHash('HEX');
-
-    //We have to additionally pass merchant key to API
-
-    pay.key = process.env.MERCHANT_KEY;
-    pay.surl = process.env.DEPLOYED_URL + 'payment/success';
-    pay.furl = process.env.DEPLOYED_URL + 'payment/fail';
-    pay.hash = hash;
-    //Making an HTTP/HTTPS call with request
-    request.post(
-        {
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
+router.post('/payment_gateway/stripe', isLoggedIn, async (req, res) => {
+    const { token } = req.body;
+    const amount = 10000 * 100;
+    console.log(req.body);
+    try {
+        const payment = await Stripe.paymentIntents.create({
+            amount: amount,
+            currency: 'usd',
+            description: 'E-commerce Payment',
+            payment_method_data: {
+                type: 'card',
+                card: {
+                    token: token
+                },
             },
-            url: 'https://sandboxsecure.payu.in/_payment', //Testing url
-            form: pay
-        },
-        function (error, httpRes, body) {
-            if (error)
-                res.send({
-                    status: false,
-                    message: error.toString()
-                });
-            if (httpRes.statusCode === 200) {
-                res.send(body);
-            } else if (httpRes.statusCode >= 300 && httpRes.statusCode <= 400) {
-                res.redirect(httpRes.headers.location.toString());
-            }
+            confirm: true,
+            automatic_payment_methods: {enabled: true, allow_redirects: 'never'}
+        });
+        res.send('Payment successful');
+    } catch (err) {
+        console.error('Error processing payment:', err);
+        let message = 'An error occurred while processing your payment.';
+
+        if (err.type === 'StripeCardError') {
+            message = err.message;
         }
-    );
+
+        res.status(500).send(message);
+    }
 });
+
+
 
 router.post('/payment/success', isLoggedIn, async (req, res) => {
     //Payumoney will send Success Transaction data to req body.
