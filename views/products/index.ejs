@@ -4,12 +4,15 @@
 
         <div class="container"><%- include('../partials/flash') %></div>
         <!-- Highlighted Products -->
-        <% if (currentUser && currentUser.username===process.env.ADMIN_USERNAME) { %>
-            <a href="/products/new"> Create new user</a>
-            <% } %>
+        
                 <div class="container ">
                     <div class="row">
                         <h2>Products</h2>
+                        <% if (currentUser && currentUser.username===process.env.ADMIN_USERNAME) { %>
+                            <div class="justify-content-center">
+                                <a href="/products/new" class="btn btn-secondary mt-3 mb-3" style="width: 200px "> Create new product</a>
+                            </div>
+                            <% } %>
                     </div>
                 </div>
 
