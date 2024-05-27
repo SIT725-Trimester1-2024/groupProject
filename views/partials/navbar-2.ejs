@@ -38,6 +38,21 @@
         >
           <!-- Cart  -->
           <div class="nav-link dropdown icon_navbar">
+            <!-- If currentUser._id is null the link is login -->
+            <% if(!currentUser) { %>
+            <a
+              class="nav-link active dropdown-toggle"
+              href="/login"
+              aria-expanded="false"
+              style="background-color: #60e4dd"
+              ><img
+                src="/image/icon _Cart.svg"
+                alt="Cart"
+                width="30px"
+                height="30px"
+                class="icon_navbar"
+            /></a>
+            <% } else { %>
             <a href="/user/<%= currentUser._id%>/cart">
               <img
                 src="/image/icon _Cart.svg"
@@ -47,6 +62,7 @@
                 class="icon_navbar"
               />
             </a>
+            <% } %>
           </div>
           <!-- Account -->
           <div class="nav-link dropdown">
