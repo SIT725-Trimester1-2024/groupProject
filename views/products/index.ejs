@@ -1,38 +1,44 @@
-<%- include("../partials/header") %> 
-<%- include("../partials/navbar-2") %>
-<link rel="stylesheet" href="/css/homepage.css" />
+<%- include("../partials/header") %>
+    <%- include("../partials/navbar-2") %>
+        <link rel="stylesheet" href="/css/homepage.css" />
 
-<div class="container"><%- include('../partials/flash') %></div>
-<!-- Highlighted Products -->
-<div class="container ">
-    <div class = "row">
-        <h2>Products</h2>
-        </div>
-</div>
+        <div class="container"><%- include('../partials/flash') %></div>
+        <!-- Highlighted Products -->
+        <% if (currentUser && currentUser.username===process.env.ADMIN_USERNAME) { %>
+            <a href="/products/new"> Create new user</a>
+            <% } %>
+                <div class="container ">
+                    <div class="row">
+                        <h2>Products</h2>
+                    </div>
+                </div>
 
-<div class="container">
-    <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <% for(let prod of products){ %>
 
-    
-    <% for(let prod of products){ %>
+                            <div class="col-2 highlight-card mb-3">
+                                <div class="card">
+                                    <a href="/product/<%= prod.id %>">
+                                        <img src="<%= prod.images[0]%>" class="card-img-top" alt="<%= prod.title %>" />
 
-    <div class="col-2 highlight-card mb-3">
-        <div class="card">
-            <a href="/product/<%= prod.id %>">
-            <img src="<%= prod.images[0]%>"class="card-img-top" alt="<%= prod.title %>"/>
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= prod.title %>
+                                            </h5>
+                                            <p class="card-text" id="description">
+                                                <%= prod.description %>
+                                            </p>
+                                            <p class="card-text" id="price">$ <%= prod.price %>
+                                            </p>
 
-            <div class="card-body">
-                <h5 class="card-title"><%= prod.title %></h5>
-                <p class="card-text" id="description"><%= prod.description %></p>
-                <p class="card-text" id="price">$ <%= prod.price %></p>
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
 
-                <i class="fa fa-shopping-cart"></i>
-            </div>
-            </a>
-        </div>
-    </div>
-
-    <% } %>
-    </div>
-</div>
-<%- include("../partials/footer") %>
+                            <% } %>
+                    </div>
+                </div>
+                <%- include("../partials/footer") %>
