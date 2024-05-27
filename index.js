@@ -16,7 +16,6 @@ const cartRoutes = require("./routes/cart");
 const paymentRoutes = require('./routes/payment');
 const dashRoutes = require('./routes/dashboard');
 
-
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -35,7 +34,7 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+module.exports = app;
 passport.use(new LocalStrategy(User.authenticate()));
 
 passport.use(
