@@ -45,7 +45,7 @@ router.get('/orders/:id', isLoggedIn, isValid, async (req, res) => {
 router.get('/orders', isAdmin, isValid, async (req, res) => {
     try {
         const orders = await Order.find().populate('products');
-        res.render('account/order', { orders });
+        res.render('account/order-admin', { orders });
     } catch (err) {
         console.log(err);
         req.flash('error', 'Unable to fetch your orders');
