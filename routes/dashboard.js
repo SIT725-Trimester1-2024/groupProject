@@ -59,7 +59,7 @@ router.patch('/adminfinishorder/:id', isLoggedIn, isAdmin, async (req, res) => {
         const { id } = req.params;
         //find by order id and update status to delivered
         await Order.findByIdAndUpdate(id, { delivered: 'true' });
-        req.flash('success', 'Successfully updated order status');
+        res.redirect('/ordersadmin');
     } catch (err) {
         console.log(err);
         req.flash('error', 'Unable to update order status');
