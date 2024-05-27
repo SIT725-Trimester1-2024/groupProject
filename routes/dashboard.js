@@ -3,6 +3,7 @@ const User = require('../models/user');
 const Order = require('../models/orders');
 const isLoggedIn = require('../middlewares/isLoggedIn');
 const isValid = require('../middlewares/isValid');
+const isAdmin = require('../middlewares/isAdmin');
 const router = express.Router();
 
 router.get('/user/:id', isLoggedIn, isValid, async (req, res) => {
@@ -41,6 +42,31 @@ router.get('/orders/:id', isLoggedIn, isValid, async (req, res) => {
         res.status(500).render('error');
     }
 });
+//get all orders of all user admin role
+router.get('/ordersadmin', isLoggedIn, isAdmin, async (req, res) => {
+    try {
+        const orders = await Order.find().populate('products');
+        res.render('account/order-admin', { orders });
+    } catch (err) {
+        console.log(err);
+        req.flash('error', 'Unable to fetch your orders');
+        res.status(500).render('error');
+    }
+});
+//admin change order status 
+router.get('/adminfinishorder/:id', isLoggedIn, isAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+        //find by order id and update status to delivered
+        var order = await Order.findById(id);
+        order.delevered = 'true';
+        await order.save();
+        res.redirect('/ordersadmin');
+    } catch (err) {
+        console.log(err);
+        req.flash('error', 'Unable to update order status');
 
+    }
+});
 
 module.exports = router;
