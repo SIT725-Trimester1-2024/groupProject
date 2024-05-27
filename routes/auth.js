@@ -61,4 +61,24 @@ router.get('/logout', (req, res) => {
     res.redirect('/login');
 });
 
+//change password
+router.get('/change-password', (req, res) => {
+    res.render('auth/change-password');
+});
+
+//express passport change password
+router.post('/change-password', async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        await user.changePassword(req.body.oldPassword, req.body.newPassword);
+        await user.save();
+        req.flash('success', 'Password changed successfully');
+        res.redirect('/products');
+    } catch (e) {
+        req.flash('error', 'Old password is incorrect');
+        res.redirect('/change-password');
+    }
+});
+
+
 module.exports = router;
