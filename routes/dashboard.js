@@ -41,6 +41,18 @@ router.get('/orders/:id', isLoggedIn, isValid, async (req, res) => {
         res.status(500).render('error');
     }
 });
+//get all orders of all user admin role
+router.get('/orders', isAdmin, isValid, async (req, res) => {
+    try {
+        const orders = await Order.find().populate('products');
+        res.render('account/order', { orders });
+    } catch (err) {
+        console.log(err);
+        req.flash('error', 'Unable to fetch your orders');
+        res.status(500).render('error');
+    }
+});
+
 
 
 module.exports = router;
