@@ -13,8 +13,7 @@ const authRoutes = require("./routes/auth");
 const productsRoutes = require("./routes/products");
 const accountRoutes = require("./routes/account");
 const cartRoutes = require("./routes/cart");
-const paymentRoutes = require('./routes/payment');
-
+const paymentRoutes = require("./routes/payment");
 
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
@@ -34,7 +33,7 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+module.exports = app;
 passport.use(new LocalStrategy(User.authenticate()));
 
 passport.use(
