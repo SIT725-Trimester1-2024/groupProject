@@ -102,11 +102,11 @@
                 </p>
               </div>
             </div>
-
-            <input type="text" id="discountCode" placeholder="Enter voucher code" />
+            <input type="number" hidden value="<%= total %>" id="total">
+            <!-- <input type="text" id="discountCode" placeholder="Enter voucher code" />
             <button id="applyButton" class="apply-button">Apply</button>
             <br />
-            <br />
+            <br /> -->
 
             <div class="row">
               <div class="col-6">
@@ -134,21 +134,42 @@
                 Place Order
               </button>
             </form> -->
-
+            <style>
+              #card-element{
+                background-color: white;
+                width: 100%;
+                height: 50px;
+                padding-top: 15px;
+              }
+              .stripe-title{
+                font-size: 1.75rem;
+                
+              }
+              .stripe-btn{
+                margin-top: 15px;
+                border-radius: 50px;
+                background-color: #07b5ac;
+                /* border-color: white; */
+                color: white;
+              }
+            </style>
             <form action="/payment_gateway/stripe" method="post" id="payment-form">
               <div class="form-row">
-                <label for="card-element">
+                <label for="card-element mt-3 mb-3" class="stripe-title">
                   Credit or debit card
                 </label>
-                <div id="card-element">
-                  <!-- A Stripe Element will be inserted here. -->
+                <div class="strip">
+                  <div id="card-element">
+                    <!-- A Stripe Element will be inserted here. -->
+                  </div>
                 </div>
+                
 
                 <!-- Used to display Element errors. -->
                 <div id="card-errors" role="alert"></div>
               </div>
 
-              <button>Submit Payment</button>
+              <button class="stripe-btn btn1">Submit Payment</button>
             </form>
 
             <script src="https://js.stripe.com/v3/"></script>
@@ -171,9 +192,12 @@
                   errorElement.textContent = error.message;
                 } else {
                   const hiddenInput = document.createElement('input');
+                  let total = document.getElementById('total').val;
+                  
                   hiddenInput.setAttribute('type', 'hidden');
                   hiddenInput.setAttribute('name', 'token');
                   hiddenInput.setAttribute('value', token.id);
+                  hiddenInput.setAttribute('amount', total);
 
                   form.appendChild(hiddenInput);
                   form.submit();

@@ -11,7 +11,7 @@ router.post('/payment_gateway/stripe', isLoggedIn, async (req, res) => {
     try {
         const payment = await Stripe.paymentIntents.create({
             amount: amount,
-            currency: 'usd',
+            currency: 'aud',
             description: 'E-commerce Payment',
             payment_method_data: {
                 type: 'card',
