@@ -13,7 +13,8 @@ const authRoutes = require("./routes/auth");
 const productsRoutes = require("./routes/products");
 const accountRoutes = require("./routes/account");
 const cartRoutes = require("./routes/cart");
-const paymentRoutes = require("./routes/payment");
+const paymentRoutes = require('./routes/payment');
+const dashRoutes = require('./routes/dashboard');
 
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
@@ -97,6 +98,7 @@ app.use(productsRoutes);
 app.use(accountRoutes);
 app.use(cartRoutes);
 app.use(paymentRoutes);
+app.use(dashRoutes);
 
 app.get("/", (req, res) => {
   res.redirect("/products");
