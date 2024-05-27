@@ -1,49 +1,42 @@
 <%- include("../partials/header") %> <%- include("../partials/navbar-2") %>
     <link rel="stylesheet" href="/css/account.css" />
-    <div class="wrap">
-      <div class="sidebar">
-        <ul class="list-group">
-          <li class="list-group-item active">My Profile</li>
+    
+    <div class="container mt-3">
+      <div class="row">
+          <nav class="col-md-3 col-lg-2 d-md-block sidebar background-left">
+              <div class="sidebar-sticky">
+                  <h2 class="background-title">My Account</h2>
+                  <ul class="nav flex-column">
+                      <li class="nav-item">
+                          <a class="nav-link custom-button mb-3 mt-3" href="#profile">Profile</a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link custom-button mb-3 mt-3" href="/orders/<%= currentUser._id %>"> Orders </a>
+                      </li>
+                  </ul>
+              </div>
+          </nav>
+          <main role="main" class="col-md-9 col-lg-10 px-4">
+              <div class="form-container">
+                  <h2>My Profile</h2>
+                  <form action="/user/<%= currentUser._id %>?_method=patch" method="post" class="row g-3 needs-validation"
+                    novalidate>
+                    <div class="mb-3 col-6">
+                      <label for="title" class="form-label">Full Name</label>
+                      <input type="text" name="user[title]" placeholder="Full Name" class="form-control" id="title"
+                        value="<%= user.title %>" required />
+                    </div>
+      
+                    <div class="mb-3 col-12">
+                      <label for="address" class="form-label">Address</label>
+                      <input type="text" name="user[address]" placeholder="Address" class="form-control" id="address"
+                        value="<%= user.Address %>" />
+                    </div>
 
-          <li class="list-group-item list-group-item-action text-dark">
-            <a href="/orders/<%= currentUser._id %>"> Orders </a>
-          </li>
-          <li class="list-group-item list-group-item-action text-dark">
-            <a href="/wishlist/<%= currentUser._id %>"> Wishlist </a>
-          </li>
-          <li class="list-group-item list-group-item-action text-dark">
-            <a href="/payment/<%= currentUser._id %>"> Payment Methods </a>
-          </li>
-        </ul>
+                    <button class="btn btn-main custom-button" type="submit" style="width: 30%">Submit</button>
+                  </form>
+              </div>
+          </main>
       </div>
-      <div class="main">
-        <div class="container">
-          <%- include('../partials/flash') %>
-            <h1>My Profile</h1>
-            <form action="/user/<%= currentUser._id %>?_method=patch" method="post" class="row g-3 needs-validation"
-              novalidate>
-              <div class="mb-3 col-6">
-                <label for="title" class="form-label">Full Name</label>
-                <input type="text" name="user[title]" placeholder="Full Name" class="form-control" id="title"
-                  value="<%= user.title %>" required />
-              </div>
-              <br /><br />
-              <div class="mb-3 col-12">
-                <label for="image" class="form-label">User Image</label>
-                <input type="text" name="user[image]" placeholder="Image" class="form-control" id="image"
-                  value="<%= user.image %>" />
-              </div>
-              <br /><br />
-
-              <div class="mb-3 col-12">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" name="user[address]" placeholder="Address" class="form-control" id="address"
-                  value="<%= user.address %>" />
-              </div>
-              <br /><br />
-              <button class="btn btn-main m-3" type="submit">Submit</button>
-            </form>
-        </div>
-      </div>
-    </div>
+  </div>
     <%- include("../partials/footer") %>
