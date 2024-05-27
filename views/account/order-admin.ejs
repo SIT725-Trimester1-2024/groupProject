@@ -27,7 +27,7 @@
                         <th>Order</th>
                         <th>Products</th>
                         <th>Date</th>
-                        <th>Delivery Status</th>
+                        <th>Action/Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,7 +58,12 @@
                         </td>
  
                         <td id="createTime"><%= order.createdAt %></td>
-                        <td><%= order.delevered != 'false'? "not yet" : "finished "%></td>
+                        <td><% if(order.delevered !== true) { %>
+                                <a href="/adminfinishorder/<%= order._id %>" class="btn btn-primary"> Finish</a>
+                            <% } else { %>
+                                <span>Finished</span>
+                            <% } %>
+                        </td>
                     </tr>
                     <% } } %>
                 </tbody>

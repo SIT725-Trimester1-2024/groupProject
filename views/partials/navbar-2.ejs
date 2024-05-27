@@ -26,11 +26,17 @@
               <a class="nav-link active dropdown-toggle" href="/login" aria-expanded="false"
                 style="background-color: #60e4dd"><img src="/image/icon _Cart.svg" alt="Cart" width="30px" height="30px"
                   class="icon_navbar" /></a>
-              <% } else { %>
+              <% } else if(currentUser.username !== process.env.ADMIN_USERNAME){ %>
                 <a href="/user/<%= currentUser._id%>/cart">
                   <img src="/image/icon _Cart.svg" alt="Cart" width="30px" height="30px" class="icon_navbar" />
                 </a>
+                <% } else {%>
+                  <a href="/ordersadmin">
+                    <img src="/image/icon _Cart.svg" alt="Cart" width="30px" height="30px" class="icon_navbar" />
+                  </a>
                 <% } %>
+                
+ 
           </div>
           <!-- Account -->
           <div class="nav-link dropdown">
@@ -38,17 +44,23 @@
               data-bs-boundary="viewport" style="background-color: #60e4dd"><img src="/image/icon _Person.svg"
                 alt="User" width="30px" height="30px" class="icon_navbar" /></a>
             <ul class="dropdown-menu">
-              <li>
+              
                 <!-- If currentuser is not defined show login else show my account -->
                 <% if(!currentUser) { %>
-                  <a class="dropdown-item" href="/login">Login</a>
+                  <li>
+                    <a class="dropdown-item" href="/login">Login</a>
+                  </li>
                   <% } else { %>
-                    <a class="dropdown-item" href="/user/<%= currentUser._id %>">My Account</a>
+                    <li>
+                      <a class="dropdown-item" href="/user/<%= currentUser._id %>">My Account</a>
+ 
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="/logout">Log out</a>
+                    </li>
                     <% } %>
               </li>
-              <li>
-                <a class="dropdown-item" href="/log_out">Log out</a>
-              </li>
+              
             </ul>
           </div>
         </div>
