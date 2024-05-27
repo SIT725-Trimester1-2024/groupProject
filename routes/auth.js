@@ -25,7 +25,8 @@ router.post('/register', async (req, res) => {
     try {
         const user = new User({
             username: req.body.username,
-            title: req.body.title
+            title: req.body.title,
+            Address:req.body.address,
         });
         await User.register(user, req.body.password);
         req.flash(
