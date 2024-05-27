@@ -19,7 +19,10 @@ With Deakin Marketplace, we help improve the lives of many students by providing
 
 ## Marketplace UI/UX
 
-![Home Page](insert_picture_url_here)
+![Home Page]
+()![image (1)](https://github.com/SIT725-Trimester1-2024/groupProject/assets/153191342/2470701e-a0ca-4c20-ab62-f0b7deaa5157)
+(![image](https://github.com/SIT725-Trimester1-2024/groupProject/assets/153191342/24199e6d-60d6-4d1f-ac6b-fb4df0f5ff4e)
+
 
 ## Executing Program
 
