@@ -7,7 +7,7 @@ const Stripe = require('stripe')('sk_test_51PItrz2LidDOORGRkisEiM5UECjAwKjYRytvV
 router.post('/payment_gateway/stripe', isLoggedIn, async (req, res) => {
     const { token } = req.body;
     const amount = 10000 * 100;
-    console.log(req.body);
+    console.log(req);
     try {
         const payment = await Stripe.paymentIntents.create({
             amount: amount,
@@ -20,7 +20,8 @@ router.post('/payment_gateway/stripe', isLoggedIn, async (req, res) => {
                 },
             },
             confirm: true,
-            automatic_payment_methods: {enabled: true, allow_redirects: 'never'}
+            automatic_payment_methods: {enabled: true, allow_redirects: 'never'},
+            receipt_email: req.user.username
         });
         res.send('Payment successful');
     } catch (err) {
