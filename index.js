@@ -11,6 +11,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("./models/user");
 const authRoutes = require("./routes/auth");
 const productsRoutes = require("./routes/products");
+const accountRoutes = require("./routes/account");
 const cartRoutes = require("./routes/cart");
 
 dotenv.config();
@@ -92,6 +93,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(productsRoutes);
+app.use(accountRoutes);
 app.use(cartRoutes);
 
 app.get("/", (req, res) => {
@@ -103,3 +105,5 @@ app.all("*", (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server running on port 3000.");
 });
+
+// seed DB

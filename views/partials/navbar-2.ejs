@@ -6,7 +6,7 @@
     <div class="col-6 header-nav">
       <form class="d-flex" role="search">
         <div class="p-1 search-bg rounded mr-4">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
+          <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="name"/>
         </div>
         <div class="search-bg rounded">
           <button class="btn" type="submit">
@@ -39,7 +39,12 @@
                 alt="User" width="30px" height="30px" class="icon_navbar" /></a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" href="/profile">My Account</a>
+                <!-- If currentuser is not defined show login else show my account -->
+                <% if(!currentUser) { %>
+                  <a class="dropdown-item" href="/login">Login</a>
+                  <% } else { %>
+                    <a class="dropdown-item" href="/user/<%= currentUser._id %>">My Account</a>
+                    <% } %>
               </li>
               <li>
                 <a class="dropdown-item" href="/log_out">Log out</a>

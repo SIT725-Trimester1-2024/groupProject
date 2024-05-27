@@ -12,15 +12,33 @@ const cloudinary = require('../middlewares/cloudinary');
 router.use(methodOverride('_method'));
 
 router.get('/products', async (req, res) => {
-    try {
-        const products = await Product.find({}).populate('category');
-        res.render('products/index', { products });
-    } catch (error) {
-        console.log(error);
-        req.flash('error', 'Cannot Find Products');
-        res.status(500).render('error');
+    const { name } = req.query;
+    if (!name) {
+        try {
+            const products = await Product.find({}).populate('category');
+            res.render('products/index', { products });
+        } catch (error) {
+            console.log(error);
+            req.flash('error', 'Cannot Find Products');
+            res.status(500).render('error');
+        }
+    } else {
+        try {
+            //search product title contains the query string
+            const products = await Product.find({
+                title: { $regex: name, $options: 'i' }
+            }).populate('category');
+            res.render('products/index', { products });
+        } catch (error) {
+            console.log(error);
+            req.flash('error', 'Cannot Find Products');
+            res.status(500).render('error');
+        }
     }
 });
+
+
+
 router.get('/carousel', async (req, res) => {
     try {
         res.render('products/carousel');
@@ -191,5 +209,6 @@ router.post('/product/:id/review', isLoggedIn, async (req, res) => {
         res.status(500).render('error');
     }
 });
+
 
 module.exports = router;
