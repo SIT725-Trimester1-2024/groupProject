@@ -58,7 +58,9 @@ router.get('/adminfinishorder/:id', isLoggedIn, isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         //find by order id and update status to delivered
-        await Order.findByIdAndUpdate(id, { delivered: 'true' });
+        var order = await Order.findById(id);
+        order.status = 'Delivered';
+        await order.save();
         res.redirect('/ordersadmin');
     } catch (err) {
         console.log(err);
