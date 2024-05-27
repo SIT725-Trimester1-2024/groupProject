@@ -23,8 +23,8 @@
           <div class="nav-link dropdown icon_navbar">
             <!-- If currentUser._id is null the link is login -->
             <% if(!currentUser) { %>
-              <a class="nav-link active dropdown-toggle" href="/login" aria-expanded="false"
-                style="background-color: #60e4dd"><img src="/image/icon _Cart.svg" alt="Cart" width="30px" height="30px"
+              <a href="/login">
+                <img src="/image/icon _Cart.svg" alt="Cart" width="30px" height="30px"
                   class="icon_navbar" /></a>
               <% } else if(currentUser.username !== process.env.ADMIN_USERNAME){ %>
                 <a href="/user/<%= currentUser._id%>/cart">
@@ -43,28 +43,72 @@
             <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
               data-bs-boundary="viewport" style="background-color: #60e4dd"><img src="/image/icon _Person.svg"
                 alt="User" width="30px" height="30px" class="icon_navbar" /></a>
-            <ul class="dropdown-menu">
-              
-                <!-- If currentuser is not defined show login else show my account -->
-                <% if(!currentUser) { %>
-                  <li>
-                    <a class="dropdown-item" href="/login">Login</a>
+                <ul class="dropdown-menu">
+                  
+                    <!-- If currentuser is not defined show login else show my account -->
+                    <% if(!currentUser) { %> 
+                      <li>
+                        <a class="dropdown-item" href="/login">Login</a>
+                      </li>
+                      <% } else { %>
+                        <li>
+                          <a class="dropdown-item" href="/user/<%= currentUser._id %>">My Account</a>
+    
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="/logout">Log out</a>
+                        </li>
+                        <% } %>
                   </li>
-                  <% } else { %>
-                    <li>
-                      <a class="dropdown-item" href="/user/<%= currentUser._id %>">My Account</a>
- 
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="/logout">Log out</a>
-                    </li>
-                    <% } %>
-              </li>
-              
-            </ul>
+                  
+                </ul>
           </div>
+          <!-- Notifcation -->
+          <% if(currentUser){ %>
+            <input type="text" value="<%= currentUser._id %>" hidden id="userId">
+            <div class="nav-link dropdown">
+              <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                data-bs-boundary="viewport" style="background-color: #60e4dd; color: white !important"><img src="/image/icon_noti.svg"
+                  alt="Notifcation" width="30px" height="30px" class="icon_navbar" />
+              </a>
+                  <ul class="dropdown-menu">
+                    
+                    <div id="noti-child">
+                    <li >
+                      <a class="dropdown-item" id="noti-child-2">Notifcation 1 here</a>
+                    </li>
+                    </div>
+                  </ul>
+            </div>
+          <% }%>
+          <!-- End Notfi -->
         </div>
       </nav>
     </div>
   </div>
 </div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<script>
+const io = require('socket.io');
+const socket = io('http://localhost:3001');
+const userIdElement = document.getElementById('userId');
+if (userIdElement) {
+    var userId = userIdElement.innerText;
+    socket.emit('userId', userId);
+    socket.on('notification', (message) => {
+        showNotification(message);
+    });
+}
+ 
+function showNotification(message) {
+    const noti = document.getElementById('noti-child');
+
+    noti.classList.add('notification');
+    noti.innerText = message;
+    noti.replaceHTML(noti-child-2);
+
+    setTimeout(() => {
+        noti.remove();
+    }, 3000);
+}
+</script>
