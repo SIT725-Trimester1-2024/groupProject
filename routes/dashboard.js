@@ -60,7 +60,16 @@ router.get('/adminfinishorder/:id', isLoggedIn, isAdmin, async (req, res) => {
         //find by order id and update status to delivered
         var order = await Order.findById(id);
         order.delevered = 'true';
-        await order.save();
+        await order.save((err) => {
+            if (err) {
+                console.log(err);
+                req.flash('error', 'Unable to update order status');
+            } else {
+                req.flash('success', 'Successfully updated order status');
+                //send notification to user
+                sendNotification(order.user._id, 'Your order has been delivered');
+            }
+        });
         res.redirect('/ordersadmin');
     } catch (err) {
         console.log(err);
@@ -68,5 +77,18 @@ router.get('/adminfinishorder/:id', isLoggedIn, isAdmin, async (req, res) => {
 
     }
 });
+
+//send notification to user via localhost:3001/send-notification post
+function sendNotification(userId, message) {
+    //send request to localhost:3001/send-notification
+    fetch('http://localhost:3001/send-notification', {
+        method: 'POST',
+        body: JSON.stringify({ userId, message }),
+        headers: { 'Content-Type': 'application/json' },
+    })
+        .then((res) => res.text())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
+}
 
 module.exports = router;

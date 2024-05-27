@@ -15,6 +15,7 @@ const accountRoutes = require("./routes/account");
 const cartRoutes = require("./routes/cart");
 const paymentRoutes = require('./routes/payment');
 const dashRoutes = require('./routes/dashboard');
+const socket = require('socket.io');
 
 
 dotenv.config();
@@ -107,8 +108,12 @@ app.get("/", (req, res) => {
 app.all("*", (req, res) => {
   res.render("404");
 });
-app.listen(process.env.PORT || 3000, () => {
+
+//init socket.io
+const server = app.listen(process.env.PORT || 3000, () => {
   console.log("Server running on port 3000.");
 });
+const io = socket(server);
+
 
 // seed DB
