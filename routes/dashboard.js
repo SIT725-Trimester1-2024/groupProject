@@ -60,15 +60,8 @@ router.get('/adminfinishorder/:id', isLoggedIn, isAdmin, async (req, res) => {
         //find by order id and update status to delivered
         var order = await Order.findById(id);
         order.delevered = 'true';
-        await order.save((err) => {
-            if (err) {
-                console.log(err);
-                req.flash('error', 'Unable to update order status');
-            } else {
-                req.flash('success', 'Successfully updated order status');
-                //send notification to user
-                sendNotification(order.user._id, 'Your order has been delivered');
-            }
+        await order.save().then(() => {
+            sendNotification(order.user._id, 'Your order has been delivered');
         });
         res.redirect('/ordersadmin');
     } catch (err) {

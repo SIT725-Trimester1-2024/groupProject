@@ -72,12 +72,9 @@
                   alt="Notifcation" width="30px" height="30px" class="icon_navbar" />
               </a>
                   <ul class="dropdown-menu">
-                    
-                    <div id="noti-child">
                     <li >
-                      <a class="dropdown-item" id="noti-child-2">Notifcation 1 here</a>
+                      <a class="dropdown-item" id="noti-child">Notifcation 1 here</a>
                     </li>
-                    </div>
                   </ul>
             </div>
           <% }%>
@@ -87,13 +84,12 @@
     </div>
   </div>
 </div>
-<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js" crossorigin="anonymous"></script>
 <script>
-const io = require('socket.io');
 const socket = io('http://localhost:3001');
 const userIdElement = document.getElementById('userId');
 if (userIdElement) {
-    var userId = userIdElement.innerText;
+    var userId = userIdElement.value;
     socket.emit('userId', userId);
     socket.on('notification', (message) => {
         showNotification(message);
@@ -101,14 +97,8 @@ if (userIdElement) {
 }
  
 function showNotification(message) {
-    const noti = document.getElementById('noti-child');
-
-    noti.classList.add('notification');
-    noti.innerText = message;
-    noti.replaceHTML(noti-child-2);
-
-    setTimeout(() => {
-        noti.remove();
-    }, 3000);
+    const notiHtml = document.getElementById('noti-child');
+    //replace a with message
+    notiHtml.innerHTML = message;
 }
 </script>
